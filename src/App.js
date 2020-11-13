@@ -1,9 +1,12 @@
+// import Customization from './Customization/Customization';
+// import YourCart from './YourCart/YourCart';
 import React, { Component } from 'react';
 
 // Normalizes string as a slug - a string that is safe to use
 // in both URLs and html attributes
 import slugify from 'slugify';
-
+import ComponentOptions from './CommponentOptions/CommponentOptions';
+import CustomComponent from './CustomComponents/CustomComponents';
 import './App.css';
 
 // This object will allow us to
@@ -43,7 +46,10 @@ class App extends Component {
     });
   };
 
+
   render() {
+
+  // Customization
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
       const options = this.props.features[feature].map(item => {
@@ -64,32 +70,43 @@ class App extends Component {
           </div>
         );
       });
-
+// CustomComponent
       return (
-        <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">
-            <h3>{feature}</h3>
-          </legend>
-          {options}
-        </fieldset>
+        <CustomComponent 
+        key={featureHash}
+        feature={feature}
+        options={options}/>
+        
+        // <fieldset className="feature" key={featureHash}>
+        //   <legend className="feature__name">
+        //     <h3>{feature}</h3>
+        //   </legend>
+        //   {options}
+        // </fieldset>
       );
     });
 
+  //ComponentOption
     const summary = Object.keys(this.state.selected).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
       const selectedOption = this.state.selected[feature];
 
       return (
-        <div className="summary__option" key={featureHash}>
-          <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">{selectedOption.name}</div>
-          <div className="summary__option__cost">
-            {USCurrencyFormat.format(selectedOption.cost)}
-          </div>
-        </div>
+        <ComponentOptions
+        key={featureHash}
+        feature={feature}
+        selectedOption={selectedOption.name}
+        cost={USCurrencyFormat.format(selectedOption.cost)}
+        />
+        // <div className="summary__option" key={featureHash}>
+        //   <div className="summary__option__label">{feature} </div>
+        //   <div className="summary__option__value">{selectedOption.name}</div>
+        //   <div className="summary__option__cost">
+        //     {USCurrencyFormat.format(selectedOption.cost)}
+        //   </div>
+        // </div>
       );
     });
-
     const total = Object.keys(this.state.selected).reduce(
       (acc, curr) => acc + this.state.selected[curr].cost,
       0
