@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 
 class Customization extends Component {
+    
     render() {
         return (
             <div key={this.props.key} className="feature__item">
@@ -14,7 +15,7 @@ class Customization extends Component {
                 onChange={this.props.onChange}
               />
               <label htmlFor={this.props.htmlFor} className="feature__label">
-                {this.props.name} ({this.props.cost})
+                {this.props.itemName} ({this.props.cost})
               </label>
             </div>
           );
